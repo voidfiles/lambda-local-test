@@ -1,10 +1,12 @@
 'use strict';
 
-var joule = require('./joule');
+var JouleApp = require('./joule/index');
 
-joule.get('/', function (event, context, res) {
+var myApp = new JouleApp();
+
+myApp.router.get('/', function (event, context, res) {
   res.send('Got it ');
 });
 
 
-module.exports = joule;
+module.exports = myApp;

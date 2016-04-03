@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Yo</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <p>What does /api/ response with?</p>
+    <p id='api-output'></p>
+    <script>
+      fetch('/api/').then(function(response) {
+        return response.text();
+      }).then(function (text) {
+        document.getElementById('api-output').innerText = text;
+      })
+    </script>
+  </body>
+</html>

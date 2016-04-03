@@ -102,12 +102,10 @@ LocalResponse.prototype.send = function(data) {
 
 JouleRouter.prototype.routeForLocal = function (req, res) {
   var path = url.parse(req.url).pathname;
-  console.log(req.path, path);
   var cb = this.routePath(req.method, path);
   var response = new LocalResponse(res);
   var event = {};
   var context = {};
-  console.log(cb);
   if (!cb) {
     response.send('');
     return;
@@ -116,5 +114,17 @@ JouleRouter.prototype.routeForLocal = function (req, res) {
   return cb(event, context, response);
 };
 
+JouleRouter.prototype.routeForLambda = function (event, context) {
+  var path = url.parse(event.url).pathname;
+  var cb = this.routePath(event.method, path);
+  var response = Response();
 
-module.exports = new JouleRouter();
+  if (!cb) {
+    response.send('');
+    return;
+  }
+
+  return cb(event, context, response);
+};
+
+module.exports = JouleRouter;

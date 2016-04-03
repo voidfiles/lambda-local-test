@@ -2,15 +2,22 @@
 
 var connect = require('connect');
 var http = require('http');
+var serveStatic = require('serve-static');
 
-var app = connect();
+
+
+var httpApp = connect();
 var jouleApp = require('./index');
 
 // respond to all requests
-app.use(function(req, res){
+httpApp.use('/api', function(req, res){
   // res.end('Hello from Connect!\n');
-  jouleApp.routeForLocal(req, res);
+  jouleApp.router.routeForLocal(req, res);
 });
 
+var staticCode = serveStatic('public/');
+
+httpApp.use(staticCode);
+
 //create node.js http server and listen on port
-http.createServer(app).listen(3000);
+http.createServer(httpApp).listen(3000);
